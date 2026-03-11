@@ -1,12 +1,12 @@
 @if (open) {
   <div class="chat-panel">
     <div class="chat-header">
-      <span>Questions? Ask Jo Jo's</span>
-      <button class="close" (click)="open = false" aria-label="Close">×</button>
+      <span class="header-title"><span class="paw">🐾</span> Woof! Ask Jo Jo's</span>
+      <button class="close" (click)="open = false" aria-label="Close chat">×</button>
     </div>
     <div class="chat-messages">
       @if (messages.length === 0) {
-        <p class="placeholder">Ask about our services, pricing, policies, or anything else!</p>
+        <p class="placeholder">Woof! Ask about walks, belly rubs, treats, or anything pup-related! 🐕</p>
       }
       @for (m of messages; track $index) {
         <div class="msg" [class.user]="m.role === 'user'" [class.assistant]="m.role === 'assistant'">
@@ -14,15 +14,15 @@
         </div>
       }
       @if (loading) {
-        <div class="msg assistant">...</div>
+        <div class="msg assistant">Woof, fetching...</div>
       }
     </div>
     <form class="chat-input" (ngSubmit)="send()">
-      <input [(ngModel)]="input" name="input" placeholder="Type your question..." />
-      <button type="submit">Send</button>
+      <input [(ngModel)]="input" name="input" placeholder="What's on your mind, human?" />
+      <button type="submit" class="btn-fetch">Fetch! 🎾</button>
     </form>
   </div>
 }
 <button class="chat-toggle" (click)="open = !open" [attr.aria-label]="open ? 'Close chat' : 'Open chat'">
-  {{ open ? '×' : '💬' }}
+  {{ open ? '×' : '🐕' }}
 </button>

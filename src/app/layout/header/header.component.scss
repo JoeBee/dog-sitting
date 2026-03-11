@@ -12,10 +12,11 @@
 
 .logo {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-primary);
   text-decoration: none;
   font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 .nav {
@@ -28,10 +29,16 @@
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
 
-    &:hover,
+    &:hover {
+      color: var(--color-primary);
+    }
+
     &.active {
       color: var(--color-primary);
+      font-weight: 600;
+      border-bottom-color: var(--color-primary);
     }
 
     &.btn-register {
@@ -39,6 +46,19 @@
       color: white;
       padding: 0.5rem 1rem;
       border-radius: var(--radius);
+      margin-bottom: 0;
+
+      &:hover {
+        background: var(--color-primary-dark);
+        color: white;
+      }
+
+      &.active {
+        background: var(--color-primary-dark);
+        color: white;
+        border-bottom-color: transparent;
+        box-shadow: 0 0 0 2px var(--color-primary-dark);
+      }
     }
   }
 }
@@ -84,6 +104,13 @@
     border: none;
     cursor: pointer;
     font-size: 1rem;
+  }
+
+  a.active {
+    color: var(--color-primary);
+    font-weight: 600;
+    border-left: 3px solid var(--color-primary);
+    padding-left: calc(0.75rem - 3px);
   }
 }
 

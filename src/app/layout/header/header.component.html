@@ -30,7 +30,7 @@
       </div>
     } @else {
       <a routerLink="/login" routerLinkActive="active">Login</a>
-      <a routerLink="/register" class="btn-register" routerLinkActive="active">Register</a>
+      <a routerLink="/register" class="btn-register" routerLinkActive="active">Create Account</a>
     }
   </nav>
   <button class="mobile-toggle" (click)="toggleMobile()" [attr.aria-label]="mobileOpen ? 'Close menu' : 'Open menu'">
@@ -39,23 +39,23 @@
 </header>
 @if (mobileOpen) {
   <nav class="nav-mobile">
-    <a routerLink="/" (click)="mobileOpen=false">Home</a>
-    <a routerLink="/about" (click)="mobileOpen=false">About</a>
-    <a routerLink="/team" (click)="mobileOpen=false">Team</a>
-    <a routerLink="/adventures" (click)="mobileOpen=false">Adventures</a>
-    <a routerLink="/prices" (click)="mobileOpen=false">Prices</a>
-    <a routerLink="/faq" (click)="mobileOpen=false">FAQ</a>
-    <a routerLink="/contact" (click)="mobileOpen=false">Contact</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="mobileOpen=false">Home</a>
+    <a routerLink="/about" routerLinkActive="active" (click)="mobileOpen=false">About</a>
+    <a routerLink="/team" routerLinkActive="active" (click)="mobileOpen=false">Team</a>
+    <a routerLink="/adventures" routerLinkActive="active" (click)="mobileOpen=false">Adventures</a>
+    <a routerLink="/prices" routerLinkActive="active" (click)="mobileOpen=false">Prices</a>
+    <a routerLink="/faq" routerLinkActive="active" (click)="mobileOpen=false">FAQ</a>
+    <a routerLink="/contact" routerLinkActive="active" (click)="mobileOpen=false">Contact</a>
     @if (auth.currentUser(); as user) {
-      <a routerLink="/my-dogs" (click)="mobileOpen=false">My Dogs</a>
-      <a routerLink="/calendar" (click)="mobileOpen=false">Calendar</a>
+      <a routerLink="/my-dogs" routerLinkActive="active" (click)="mobileOpen=false">My Dogs</a>
+      <a routerLink="/calendar" routerLinkActive="active" (click)="mobileOpen=false">Calendar</a>
       @if (auth.isAdmin()) {
-        <a routerLink="/admin" (click)="mobileOpen=false">Admin</a>
+        <a routerLink="/admin" routerLinkActive="active" (click)="mobileOpen=false">Admin</a>
       }
       <button (click)="auth.logout(); mobileOpen=false">Logout</button>
     } @else {
-      <a routerLink="/login" (click)="mobileOpen=false">Login</a>
-      <a routerLink="/register" (click)="mobileOpen=false">Register</a>
+      <a routerLink="/login" routerLinkActive="active" (click)="mobileOpen=false">Login</a>
+      <a routerLink="/register" routerLinkActive="active" (click)="mobileOpen=false">Create Account</a>
     }
   </nav>
 }

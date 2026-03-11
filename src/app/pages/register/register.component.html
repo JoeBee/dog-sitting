@@ -1,5 +1,5 @@
 <div class="auth-card">
-  <h1>Register</h1>
+  <h1>Create Account</h1>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Display Name (optional)</mat-label>
@@ -19,7 +19,7 @@
       <p class="error">{{ error }}</p>
     }
     <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
-      {{ loading ? 'Creating account...' : 'Register' }}
+      {{ loading ? 'Creating account...' : 'Create Account' }}
     </button>
   </form>
   <p class="footer-link">Already have an account? <a routerLink="/login">Login</a></p>

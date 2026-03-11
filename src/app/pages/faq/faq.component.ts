@@ -10,7 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 })
 export class FaqComponent {
   faqs = [
-    { q: 'How do I book a stay?', a: 'Register for an account, add your dog(s), and submit a booking request through the Calendar. We review all requests and will confirm or reach out with questions within 24 hours.' },
+    { q: 'How do I book a stay?', a: 'Create an account, add your dog(s), and submit a booking request through the Calendar. We review all requests and will confirm or reach out with questions within 24 hours.' },
     { q: 'Do you require a meet-and-greet?', a: 'Yes. We ask that new dogs complete a walk-through of our facility before their first stay. This helps your dog feel comfortable and lets us get to know their needs.' },
     { q: 'What vaccinations are required?', a: 'Dogs must be current on Rabies, DHPP, and Bordetella. Please bring or upload vaccination records before your first booking.' },
     { q: 'Can my dog bring their own food and bedding?', a: 'Absolutely! We encourage bringing your dog\'s regular food to avoid stomach upset, and a familiar blanket or bed can help them settle in.' },

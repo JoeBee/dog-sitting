@@ -24,7 +24,7 @@ export const knowledgeContent = `
 - All bookings require admin approval — no self-booking.
 
 ## Booking Process
-- Users register, add dog profiles, and submit booking requests via the Calendar.
+- Users create an account, add dog profiles, and submit booking requests via the Calendar.
 - Admin reviews and approves or denies within 24 hours.
 - New dogs must complete a walk-through before first stay.
 

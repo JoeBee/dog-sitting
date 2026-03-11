@@ -5,7 +5,7 @@ Angular + Firebase website for a dog care business in Los Altos, CA.
 ## Features
 
 - **Public pages**: Home, About, Team, Adventures, Prices & Policies, FAQ, Contact
-- **Auth**: Login, Register (Firebase Auth)
+- **Auth**: Login, Create Account (Firebase Auth)
 - **Client area**: My Dogs (profiles), Calendar (booking requests)
 - **Admin dashboard**: Booking queue, upcoming bookings, history, capacity, users, dogs
 - **Gemini chatbot**: Q&A widget (add your API key)
