@@ -1,0 +1,44 @@
+.pricing, .policies {
+  margin-bottom: 3rem;
+}
+
+.price-table {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.service {
+  font-weight: 500;
+}
+
+.price {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.policy {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.policy h3 {
+  margin-top: 0;
+}

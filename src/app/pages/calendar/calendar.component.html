@@ -1,0 +1,78 @@
+<h1>My Calendar</h1>
+<p class="lead">View your bookings and submit new requests. All bookings require admin approval.</p>
+
+<mat-tab-group>
+  <mat-tab label="Booking Requests">
+    <div class="tab-content">
+      @if (dogs.length === 0) {
+        <p>Add a dog profile before submitting a booking. <a routerLink="/my-dogs">Manage Dogs</a></p>
+      } @else {
+        @if (submitted) {
+          <div class="success">Your request has been submitted. We'll review it and get back to you within 24 hours.</div>
+        }
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="booking-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Dog</mat-label>
+            <mat-select formControlName="dogId">
+              @for (d of dogs; track d.id) {
+                <mat-option [value]="d.id">{{ d.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Service</mat-label>
+            <mat-select formControlName="serviceType">
+              @for (s of serviceTypes; track s.value) {
+                <mat-option [value]="s.value">{{ s.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput formControlName="startDate" type="date" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input matInput formControlName="endDate" type="date" />
+          </mat-form-field>
+          <mat-checkbox formControlName="vaccinationConfirmed">
+            I confirm my dog's vaccinations are current
+          </mat-checkbox>
+          <mat-form-field appearance="outline">
+            <mat-label>Emergency Contact</mat-label>
+            <input matInput formControlName="emergencyContact" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Special Needs / Notes</mat-label>
+            <textarea matInput formControlName="specialNeeds" rows="3"></textarea>
+          </mat-form-field>
+          @if (error) {
+            <p class="error">{{ error }}</p>
+          }
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+            {{ loading ? 'Submitting...' : 'Submit Request' }}
+          </button>
+        </form>
+      }
+    </div>
+  </mat-tab>
+  <mat-tab label="My Bookings">
+    <div class="tab-content">
+      @if (bookings.length === 0) {
+        <p>No bookings yet.</p>
+      } @else {
+        <div class="bookings-list">
+          @for (b of bookings; track b.id) {
+            <mat-card>
+              <mat-card-content>
+                <p><strong>Service:</strong> {{ serviceLabel(b.serviceType) }}</p>
+                <p><strong>Dates:</strong> {{ b.startDate }} – {{ b.endDate }}</p>
+                <p><strong>Status:</strong> <span [class]="'status-' + b.status">{{ statusLabel(b.status) }}</span></p>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+</mat-tab-group>

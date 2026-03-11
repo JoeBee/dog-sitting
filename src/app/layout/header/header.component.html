@@ -1,0 +1,61 @@
+<header class="header">
+  <a routerLink="/" class="logo">Jo Jo's Hotel</a>
+  <nav class="nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <a routerLink="/team" routerLinkActive="active">Team</a>
+    <a routerLink="/adventures" routerLinkActive="active">Adventures</a>
+    <a routerLink="/prices" routerLinkActive="active">Prices</a>
+    <a routerLink="/faq" routerLinkActive="active">FAQ</a>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    @if (auth.currentUser(); as user) {
+      <a routerLink="/my-dogs" routerLinkActive="active">My Dogs</a>
+      <a routerLink="/calendar" routerLinkActive="active">Calendar</a>
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
+      <div class="user-menu">
+        <span class="user-name">{{ user.displayName || user.email }}</span>
+        <button mat-button [matMenuTriggerFor]="menu" class="account-btn">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item routerLink="/my-dogs">My Dogs</a>
+          <a mat-menu-item routerLink="/calendar">Calendar</a>
+          @if (auth.isAdmin()) {
+            <a mat-menu-item routerLink="/admin">Admin</a>
+          }
+          <button mat-menu-item (click)="auth.logout()">Logout</button>
+        </mat-menu>
+      </div>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" class="btn-register" routerLinkActive="active">Register</a>
+    }
+  </nav>
+  <button class="mobile-toggle" (click)="toggleMobile()" [attr.aria-label]="mobileOpen ? 'Close menu' : 'Open menu'">
+    <mat-icon>{{ mobileOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+</header>
+@if (mobileOpen) {
+  <nav class="nav-mobile">
+    <a routerLink="/" (click)="mobileOpen=false">Home</a>
+    <a routerLink="/about" (click)="mobileOpen=false">About</a>
+    <a routerLink="/team" (click)="mobileOpen=false">Team</a>
+    <a routerLink="/adventures" (click)="mobileOpen=false">Adventures</a>
+    <a routerLink="/prices" (click)="mobileOpen=false">Prices</a>
+    <a routerLink="/faq" (click)="mobileOpen=false">FAQ</a>
+    <a routerLink="/contact" (click)="mobileOpen=false">Contact</a>
+    @if (auth.currentUser(); as user) {
+      <a routerLink="/my-dogs" (click)="mobileOpen=false">My Dogs</a>
+      <a routerLink="/calendar" (click)="mobileOpen=false">Calendar</a>
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin" (click)="mobileOpen=false">Admin</a>
+      }
+      <button (click)="auth.logout(); mobileOpen=false">Logout</button>
+    } @else {
+      <a routerLink="/login" (click)="mobileOpen=false">Login</a>
+      <a routerLink="/register" (click)="mobileOpen=false">Register</a>
+    }
+  </nav>
+}

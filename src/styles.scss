@@ -1,0 +1,70 @@
+@use '@angular/material' as mat;
+
+:root {
+  --color-primary: #8B7355;
+  --color-primary-light: #A68B6B;
+  --color-primary-dark: #6B5344;
+  --color-accent: #D4A574;
+  --color-surface: #FDF8F3;
+  --color-surface-alt: #F5EDE4;
+  --color-background: #FFFBF7;
+  --color-text: #3D3229;
+  --color-text-muted: #6B5B4F;
+  --color-border: #E8DED5;
+  --color-success: #5B8A5B;
+  --color-warning: #C4953D;
+  --color-error: #B54A4A;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(61, 50, 41, 0.08);
+  --shadow-lg: 0 8px 24px rgba(61, 50, 41, 0.12);
+}
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: (
+      primary: mat.$orange-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: light
+    ),
+    typography: (
+      brand-family: 'DM Serif Display',
+      plain-family: 'Source Sans 3'
+    ),
+    density: 0
+  ));
+}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+main {
+  min-height: 60vh;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--color-primary-dark);
+}
+
+a {
+  color: var(--color-primary);
+}

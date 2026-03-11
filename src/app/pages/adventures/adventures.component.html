@@ -1,0 +1,17 @@
+<h1>Adventures</h1>
+<p class="lead">A peek at the fun our furry guests have while in our care.</p>
+
+<div class="gallery">
+  @for (a of adventures; track a.title) {
+    <article class="adventure-card">
+      <div class="adventure-img">
+        <img [src]="a.img" [alt]="a.title" loading="lazy" />
+      </div>
+      <div class="adventure-content">
+        <h3>{{ a.title }}</h3>
+        <p class="date">{{ a.date }}</p>
+        <p>{{ a.desc }}</p>
+      </div>
+    </article>
+  }
+</div>

@@ -1,0 +1,26 @@
+<div class="auth-card">
+  <h1>Register</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Display Name (optional)</mat-label>
+      <input matInput formControlName="displayName" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      <mat-error>Valid email required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error>At least 6 characters required</mat-error>
+    </mat-form-field>
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+      {{ loading ? 'Creating account...' : 'Register' }}
+    </button>
+  </form>
+  <p class="footer-link">Already have an account? <a routerLink="/login">Login</a></p>
+</div>

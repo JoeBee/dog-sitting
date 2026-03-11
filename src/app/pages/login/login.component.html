@@ -1,0 +1,22 @@
+<div class="auth-card">
+  <h1>Login</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      <mat-error>Valid email required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error>Password required</mat-error>
+    </mat-form-field>
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+      {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
+  </form>
+  <p class="footer-link">Don't have an account? <a routerLink="/register">Register</a></p>
+</div>

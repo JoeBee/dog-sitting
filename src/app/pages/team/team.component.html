@@ -1,0 +1,15 @@
+<h1>Our Team</h1>
+<p class="lead">Meet the people who make Jo Jo's Hotel a special place for your dog.</p>
+
+<div class="team-grid">
+  @for (member of team; track member.name) {
+    <div class="team-card">
+      <div class="team-img">
+        <img [src]="member.img" [alt]="member.name" />
+      </div>
+      <h3>{{ member.name }}</h3>
+      <p class="role">{{ member.role }}</p>
+      <p class="bio">{{ member.bio }}</p>
+    </div>
+  }
+</div>

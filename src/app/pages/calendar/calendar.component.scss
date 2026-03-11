@@ -1,0 +1,37 @@
+.lead {
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.tab-content {
+  padding: 1rem 0;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+}
+
+.success {
+  padding: 1rem;
+  background: rgba(91, 138, 91, 0.15);
+  color: var(--color-success);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.status-pending { color: var(--color-warning); }
+.status-approved { color: var(--color-success); }
+.status-denied { color: var(--color-error); }

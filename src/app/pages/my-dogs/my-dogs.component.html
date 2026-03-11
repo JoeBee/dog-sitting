@@ -1,0 +1,95 @@
+<h1>My Dogs</h1>
+<p class="lead">Add and manage your dog profiles. You need at least one dog to submit booking requests.</p>
+
+<button mat-flat-button color="primary" (click)="showForm = !showForm">
+  {{ showForm ? 'Cancel' : 'Add Dog' }}
+</button>
+
+@if (showForm) {
+  <form [formGroup]="form" (ngSubmit)="addDog()" class="dog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Breed</mat-label>
+      <input matInput formControlName="breed" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Age (years)</mat-label>
+      <input matInput formControlName="age" type="number" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Weight (lbs)</mat-label>
+      <input matInput formControlName="weight" type="number" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Color / Markings</mat-label>
+      <input matInput formControlName="colorMarkings" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Vaccination Status</mat-label>
+      <mat-select formControlName="vaccinationStatus">
+        <mat-option value="current">Current</mat-option>
+        <mat-option value="expired">Expired</mat-option>
+        <mat-option value="pending">Pending</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Vaccination Dates</mat-label>
+      <input matInput formControlName="vaccinationDates" placeholder="e.g. Rabies: 1/2025" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Vet Name</mat-label>
+      <input matInput formControlName="vetName" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Vet Contact</mat-label>
+      <input matInput formControlName="vetContact" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Medical Conditions</mat-label>
+      <input matInput formControlName="medicalConditions" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Allergies</mat-label>
+      <input matInput formControlName="allergies" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Feeding Instructions</mat-label>
+      <input matInput formControlName="feedingInstructions" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Behavioral Notes</mat-label>
+      <input matInput formControlName="behavioralNotes" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Emergency Contact (if different)</mat-label>
+      <input matInput formControlName="emergencyContactName" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Emergency Contact Phone</mat-label>
+      <input matInput formControlName="emergencyContactPhone" />
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || saving">
+      {{ saving ? 'Saving...' : 'Save Dog' }}
+    </button>
+  </form>
+}
+
+<div class="dogs-grid">
+  @for (d of dogs; track d.id) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ d.name }}</mat-card-title>
+        <mat-card-subtitle>{{ d.breed }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ d.age }} yrs, {{ d.weight }} lbs</p>
+        <p>Vacc: {{ d.vaccinationStatus }} • Walk-through: {{ d.walkThroughCompleted ? 'Yes' : 'No' }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
+
+<p><a routerLink="/calendar">Back to Calendar</a></p>

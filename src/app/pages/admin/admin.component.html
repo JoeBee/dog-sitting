@@ -1,0 +1,142 @@
+<h1>Admin Dashboard</h1>
+
+<mat-tab-group>
+  <mat-tab label="Booking Queue">
+    <div class="tab-content">
+      <h2>Pending Requests</h2>
+      @if (pending.length === 0) {
+        <p>No pending requests.</p>
+      } @else {
+        <div class="card-list">
+          @for (b of pending; track b.id) {
+            <mat-card>
+              <mat-card-content>
+                <p><strong>Service:</strong> {{ serviceLabel(b.serviceType) }}</p>
+                <p><strong>Dates:</strong> {{ b.startDate }} – {{ b.endDate }}</p>
+                <p><strong>Emergency:</strong> {{ b.emergencyContact }}</p>
+                <p><strong>Notes:</strong> {{ b.specialNeeds || '—' }}</p>
+                <div class="actions">
+                  <button mat-flat-button color="primary" (click)="approve(b.id!)">Approve</button>
+                  <button mat-stroked-button color="warn" (click)="deny(b.id!)">Deny</button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Upcoming Bookings">
+    <div class="tab-content">
+      @if (upcoming.length === 0) {
+        <p>No upcoming bookings.</p>
+      } @else {
+        <div class="card-list">
+          @for (b of upcoming; track b.id) {
+            <mat-card>
+              <mat-card-content>
+                <p><strong>{{ serviceLabel(b.serviceType) }}</strong> {{ b.startDate }} – {{ b.endDate }}</p>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Booking History">
+    <div class="tab-content">
+      @if (history.length === 0) {
+        <p>No booking history.</p>
+      } @else {
+        <div class="card-list">
+          @for (b of history; track b.id) {
+            <mat-card>
+              <mat-card-content>
+                <p><strong>{{ serviceLabel(b.serviceType) }}</strong> {{ b.startDate }} – {{ b.endDate }} — {{ statusLabel(b.status) }}</p>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Capacity">
+    <div class="tab-content">
+      <p>Maximum dogs per service type:</p>
+      <div class="capacity-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Boarding</mat-label>
+          <input matInput type="number" [(ngModel)]="capacity.boarding" min="1" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sitting</mat-label>
+          <input matInput type="number" [(ngModel)]="capacity.sitting" min="1" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Walk</mat-label>
+          <input matInput type="number" [(ngModel)]="capacity.walk" min="1" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="saveCapacity()" [disabled]="savingCapacity">Save</button>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Users">
+    <div class="tab-content">
+      @if (users.length === 0) {
+        <p>No users.</p>
+      } @else {
+        <div class="card-list">
+          @for (u of users; track u.uid) {
+            <mat-card>
+              <mat-card-content>
+                <p><strong>{{ u.displayName || u.email }}</strong></p>
+                <p>{{ u.email }} — {{ u.role }}</p>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Dogs">
+    <div class="tab-content">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter by Client</mat-label>
+        <mat-select [(ngModel)]="filterClientId">
+          <mat-option value="">All</mat-option>
+          @for (u of users; track u.uid) {
+            <mat-option [value]="u.uid">{{ u.displayName || u.email }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      @if (filteredDogs().length === 0) {
+        <p>No dogs.</p>
+      } @else {
+        <div class="card-list">
+          @for (d of filteredDogs(); track d.id) {
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>{{ d.name }}</mat-card-title>
+                <mat-card-subtitle>{{ d.breed }} • {{ d.age }} yrs, {{ d.weight }} lbs</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>Vacc: {{ d.vaccinationStatus }} • Walk-through: {{ d.walkThroughCompleted ? 'Yes' : 'No' }}</p>
+                <p>Vet: {{ d.vetName }} — {{ d.vetContact }}</p>
+                @if (d.medicalConditions) { <p>Medical: {{ d.medicalConditions }}</p> }
+                @if (d.allergies) { <p>Allergies: {{ d.allergies }}</p> }
+                @if (!d.walkThroughCompleted) {
+                  <button mat-stroked-button (click)="markWalkThrough(d.id!)">Mark Walk-Through Completed</button>
+                }
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+  </mat-tab>
+</mat-tab-group>

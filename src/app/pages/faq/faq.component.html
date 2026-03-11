@@ -1,0 +1,13 @@
+<h1>Frequently Asked Questions</h1>
+<p class="lead">Answers to common questions about our services.</p>
+
+<mat-accordion>
+  @for (faq of faqs; track faq.q) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ faq.q }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ faq.a }}</p>
+    </mat-expansion-panel>
+  }
+</mat-accordion>
