@@ -23,6 +23,11 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 
   a {
     color: var(--color-text);
@@ -67,6 +72,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .user-name {
@@ -76,6 +83,11 @@
 
 .account-btn {
   color: var(--color-text) !important;
+  white-space: nowrap;
+}
+
+.account-label {
+  margin-left: 0.25rem;
 }
 
 .mobile-toggle {

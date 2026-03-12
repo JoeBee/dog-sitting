@@ -1,0 +1,62 @@
+<h1>Account</h1>
+<p class="lead">Manage your contact information. This is used for bookings and communications.</p>
+
+<div class="account-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Contact Information</h2>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Display Name</mat-label>
+      <input matInput formControlName="displayName" placeholder="How you'd like to be called" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phone" type="tel" placeholder="(555) 123-4567" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Address Line 1</mat-label>
+      <input matInput formControlName="addressLine1" placeholder="Street address" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Address Line 2</mat-label>
+      <input matInput formControlName="addressLine2" placeholder="Apt, suite, etc. (optional)" />
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>State / Province</mat-label>
+        <input matInput formControlName="state" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Postal Code</mat-label>
+        <input matInput formControlName="postalCode" placeholder="ZIP or postal code" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" placeholder="e.g. USA" />
+      </mat-form-field>
+    </div>
+
+    @if (message) {
+      <p class="message" [class.error]="message.includes('Failed')">{{ message }}</p>
+    }
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || form.pristine || saving">
+      {{ saving ? 'Saving...' : 'Save Contact Information' }}
+    </button>
+  </form>
+
+  <p class="email-note">Email: <strong>{{ auth.currentUser()?.email }}</strong> (cannot be changed here)</p>
+</div>
+
+<p><a routerLink="/calendar">Back to Calendar</a></p>

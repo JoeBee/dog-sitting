@@ -16,10 +16,12 @@
       }
       <div class="user-menu">
         <span class="user-name">{{ user.displayName || user.email }}</span>
-        <button mat-button [matMenuTriggerFor]="menu" class="account-btn">
+        <button mat-button [matMenuTriggerFor]="menu" class="account-btn" aria-label="Account menu">
           <mat-icon>account_circle</mat-icon>
+          <span class="account-label">Account</span>
         </button>
         <mat-menu #menu="matMenu">
+          <a mat-menu-item routerLink="/account">Account</a>
           <a mat-menu-item routerLink="/my-dogs">My Dogs</a>
           <a mat-menu-item routerLink="/calendar">Calendar</a>
           @if (auth.isAdmin()) {
@@ -47,6 +49,7 @@
     <a routerLink="/faq" routerLinkActive="active" (click)="mobileOpen=false">FAQ</a>
     <a routerLink="/contact" routerLinkActive="active" (click)="mobileOpen=false">Contact</a>
     @if (auth.currentUser(); as user) {
+      <a routerLink="/account" routerLinkActive="active" (click)="mobileOpen=false">Account</a>
       <a routerLink="/my-dogs" routerLinkActive="active" (click)="mobileOpen=false">My Dogs</a>
       <a routerLink="/calendar" routerLinkActive="active" (click)="mobileOpen=false">Calendar</a>
       @if (auth.isAdmin()) {

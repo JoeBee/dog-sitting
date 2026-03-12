@@ -44,10 +44,10 @@ firebase: {
 }
 ```
 
-4. In Firebase Console, enable:
-   - **Authentication** → Email/Password
-   - **Firestore** (create database)
-   - **Storage**
+4. Enable Firebase services (required for login/register):
+   - **Authentication**: Build → Authentication → Get Started → Enable **Email/Password** under Sign-in providers.
+   - **Firestore**: Build → Firestore Database → Create database.
+   - **Storage**: Build → Storage → Get started.
 
 5. Deploy Firestore indexes:
    ```bash
@@ -139,6 +139,16 @@ git remote add origin https://github.com/JoeBee/dog-sitting.git
 git branch -M main
 git push -u origin main
 ```
+
+## Troubleshooting
+
+**`CONFIGURATION_NOT_FOUND` when registering or logging in**
+
+This means Firebase Authentication is not enabled or Email/Password sign-in is not set up:
+
+1. Go to [Firebase Console](https://console.firebase.google.com/) → your project
+2. Build → **Authentication** → **Get Started** (if needed)
+3. **Sign-in method** tab → enable **Email/Password** (toggle on, then Save)
 
 ## Security
 

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, getAuthErrorMessage } from '../../services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,8 +43,8 @@ export class RegisterComponent {
         this.form.value.displayName || undefined
       );
       this.router.navigate(['/calendar']);
-    } catch (e: any) {
-      this.error = e?.message || 'Registration failed. Please try again.';
+    } catch (e) {
+      this.error = getAuthErrorMessage(e);
     } finally {
       this.loading = false;
     }
