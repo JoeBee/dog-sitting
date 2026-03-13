@@ -8,9 +8,11 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  gap: 2rem;
 }
 
 .logo {
+  flex-shrink: 0;
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--color-primary);
@@ -23,8 +25,8 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex: 1;
   min-width: 0;
+  margin-left: auto;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;

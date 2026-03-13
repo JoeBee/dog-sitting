@@ -24,5 +24,10 @@
   </div>
 }
 <button class="chat-toggle" (click)="open = !open" [attr.aria-label]="open ? 'Close chat' : 'Open chat'">
-  {{ open ? '×' : '🐕' }}
+  @if (open) {
+    <span class="toggle-close">×</span>
+  } @else {
+    <span class="toggle-icon">🐕</span>
+    <span class="toggle-label">Have questions? Ask here</span>
+  }
 </button>

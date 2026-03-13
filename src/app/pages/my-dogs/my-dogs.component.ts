@@ -1,7 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { filter, from, switchMap } from 'rxjs';
+import { Auth, user } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
 import { DogService } from '../../services/dog.service';
 import { Dog } from '../../models';
@@ -24,6 +27,9 @@ export class MyDogsComponent implements OnInit {
   showForm = false;
   saving = false;
   private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
+  private firebaseAuth = inject(Auth);
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -50,10 +56,20 @@ export class MyDogsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const uid = this.auth.currentUser()?.uid;
-    if (uid) {
-      this.dogService.getDogsByOwner(uid).subscribe((d) => (this.dogs = d));
-    }
+    // Wait for Auth to finish initializing (e.g. from persistence) before querying
+    from(this.firebaseAuth.authStateReady()).pipe(
+        switchMap(() => user(this.firebaseAuth)),
+        filter((u): u is NonNullable<typeof u> => !!u),
+        switchMap((u) => this.dogService.getDogsByOwner(u.uid)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (d) => {
+          this.dogs = d;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Failed to load dogs:', err)
+      });
   }
 
   async addDog() {

@@ -14,8 +14,7 @@ export class DogService {
   getDogsByOwner(ownerId: string): Observable<Dog[]> {
     const q = query(
       collection(this.firestore, 'dogs'),
-      where('ownerId', '==', ownerId),
-      orderBy('createdAt', 'desc')
+      where('ownerId', '==', ownerId)
     );
     return collectionData(q, { idField: 'id' }) as Observable<Dog[]>;
   }
