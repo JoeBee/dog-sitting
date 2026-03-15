@@ -13,7 +13,7 @@ export class ContactService {
   constructor(private firestore: Firestore) {}
 
   async submit(form: ContactSubmission): Promise<string> {
-    const docRef = await addDoc(collection(this.firestore, 'contacts'), {
+    const docRef = await addDoc(collection(this.firestore, 'form_submissions'), {
       ...form,
       createdAt: new Date()
     });

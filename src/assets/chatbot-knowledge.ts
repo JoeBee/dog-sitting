@@ -8,8 +8,21 @@
 export const knowledgeContent = `
 ## About Jo Jo's Hotel
 - Jo Jo's Hotel is a dog boarding, sitting, and walking business in Los Altos, CA.
+- Dogs are dropped off at our location in Los Altos, CA.
 - Services: Dog Boarding, Dog Sitting, Dog Walks.
 - We limit capacity for personalized care (default 5 dogs per service).
+
+## Dan & Kathy — Your Dog Care Team
+- Dan and Kathy have been boarding, walking, and taking care of dogs for 15 years.
+- We are experienced, trustworthy, and dedicated to giving your dog the best care.
+
+## What We Offer
+- Fun: Plenty of playtime, social interaction, and activities to keep dogs happy and engaged.
+- Healthy: Clean facilities, regular exercise, and we encourage bringing your dog's regular food.
+- Active: Daily walks, outdoor time, and stimulation tailored to your dog's energy level.
+- Safe: Secure environment, vaccination requirements, and careful supervision at all times.
+- Caring: Personal attention, love, and comfort — we treat every dog like family.
+- Reliable: Consistent routines, clear communication, and peace of mind for pet parents.
 
 ## Pricing (approximate, verify on website)
 - Dog Boarding: $65/night

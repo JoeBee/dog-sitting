@@ -1,12 +1,30 @@
 <h1>My Dogs</h1>
 <p class="lead">Add and manage your dog profiles. You need at least one dog to submit booking requests.</p>
 
-<button mat-flat-button color="primary" (click)="showForm = !showForm">
+<button mat-flat-button color="primary" (click)="showForm ? cancelEdit() : openAddForm()">
   {{ showForm ? 'Cancel' : 'Add Dog' }}
 </button>
 
 @if (showForm) {
-  <form [formGroup]="form" (ngSubmit)="addDog()" class="dog-form">
+  <form [formGroup]="form" (ngSubmit)="saveDog()" class="dog-form">
+    <div class="photo-upload" style="grid-column: 1 / -1;">
+      <label class="photo-label">Profile Photo</label>
+      <div class="photo-area">
+        @if (photoPreviewUrl) {
+          <div class="photo-preview">
+            <img [src]="photoPreviewUrl" alt="Dog photo" />
+            <button mat-icon-button type="button" (click)="clearPhoto()" aria-label="Remove photo">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+        <label class="photo-upload-btn" [class.has-preview]="!!photoPreviewUrl">
+          <input type="file" accept="image/*" (change)="onPhotoSelected($event)" hidden />
+          <mat-icon>add_photo_alternate</mat-icon>
+          {{ photoPreviewUrl ? 'Change' : 'Upload' }} image
+        </label>
+      </div>
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
@@ -71,16 +89,24 @@
       <mat-label>Emergency Contact Phone</mat-label>
       <input matInput formControlName="emergencyContactPhone" />
     </mat-form-field>
-    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || saving">
-      {{ saving ? 'Saving...' : 'Save Dog' }}
-    </button>
+    <div style="grid-column: 1 / -1; display: flex; gap: 0.5rem;">
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || saving">
+        {{ saving ? 'Saving...' : (editingDog ? 'Update Dog' : 'Save Dog') }}
+      </button>
+      @if (editingDog) {
+        <button mat-stroked-button type="button" (click)="cancelEdit()">Cancel</button>
+      }
+    </div>
   </form>
 }
 
 <div class="dogs-grid">
   @for (d of dogs; track d.id) {
-    <mat-card>
+    <mat-card class="dog-card" (click)="startEdit(d)" role="button" tabindex="0" (keydown.enter)="startEdit(d)" (keydown.space)="$event.preventDefault(); startEdit(d)">
       <mat-card-header>
+        @if (d.profilePhotoUrl) {
+          <img mat-card-avatar [src]="d.profilePhotoUrl" [alt]="d.name" />
+        }
         <mat-card-title>{{ d.name }}</mat-card-title>
         <mat-card-subtitle>{{ d.breed }}</mat-card-subtitle>
       </mat-card-header>

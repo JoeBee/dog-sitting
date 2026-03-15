@@ -14,11 +14,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-my-dogs',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatExpansionModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule],
   templateUrl: './my-dogs.component.html',
   styleUrl: './my-dogs.component.scss'
 })
@@ -47,8 +48,13 @@ export class MyDogsComponent implements OnInit {
     feedingInstructions: [''],
     behavioralNotes: [''],
     emergencyContactName: [''],
-    emergencyContactPhone: ['']
+    emergencyContactPhone: [''],
+    profilePhotoUrl: ['']
   });
+
+  editingDog: Dog | null = null;
+  selectedPhoto: File | null = null;
+  photoPreviewUrl: string | null = null;
 
   constructor(
     public auth: AuthService,
@@ -72,20 +78,102 @@ export class MyDogsComponent implements OnInit {
       });
   }
 
-  async addDog() {
+  onPhotoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      this.selectedPhoto = file;
+      this.photoPreviewUrl = URL.createObjectURL(file);
+      this.cdr.detectChanges();
+    }
+    input.value = '';
+  }
+
+  clearPhoto() {
+    this.selectedPhoto = null;
+    if (this.photoPreviewUrl) {
+      URL.revokeObjectURL(this.photoPreviewUrl);
+      this.photoPreviewUrl = null;
+    }
+    this.form.patchValue({ profilePhotoUrl: '' });
+    this.cdr.detectChanges();
+  }
+
+  async saveDog() {
     const uid = this.auth.currentUser()?.uid;
     if (!uid || this.form.invalid) return;
     this.saving = true;
     try {
-      await this.dogService.addDog({
-        ownerId: uid,
-        ...this.form.value,
-        walkThroughCompleted: false
-      } as Dog);
-      this.form.reset({ vaccinationStatus: 'current', spayedNeutered: true });
-      this.showForm = false;
+      let profilePhotoUrl = this.form.value.profilePhotoUrl ?? '';
+      if (this.selectedPhoto) {
+        const path = `dogs/${uid}/${Date.now()}_${this.selectedPhoto.name}`;
+        profilePhotoUrl = await this.dogService.uploadPhoto(this.selectedPhoto, path);
+        this.form.patchValue({ profilePhotoUrl });
+      }
+      const payload = { ...this.form.value, profilePhotoUrl } as Partial<Dog>;
+
+      if (this.editingDog?.id) {
+        await this.dogService.updateDog(this.editingDog.id, {
+          ...payload,
+          ownerId: this.editingDog.ownerId,
+          walkThroughCompleted: this.editingDog.walkThroughCompleted
+        });
+        this.editingDog = null;
+      } else {
+        await this.dogService.addDog({
+          ownerId: uid,
+          ...payload,
+          walkThroughCompleted: false
+        } as Dog);
+      }
+      this.resetForm();
     } finally {
       this.saving = false;
     }
+  }
+
+  startEdit(dog: Dog) {
+    this.editingDog = dog;
+    this.selectedPhoto = null;
+    this.form.patchValue({
+      name: dog.name,
+      breed: dog.breed,
+      age: dog.age,
+      weight: dog.weight ?? null,
+      colorMarkings: dog.colorMarkings ?? '',
+      vaccinationStatus: dog.vaccinationStatus,
+      vaccinationDates: dog.vaccinationDates ?? '',
+      spayedNeutered: dog.spayedNeutered ?? true,
+      vetName: dog.vetName ?? '',
+      vetContact: dog.vetContact ?? '',
+      medicalConditions: dog.medicalConditions ?? '',
+      allergies: dog.allergies ?? '',
+      feedingInstructions: dog.feedingInstructions ?? '',
+      behavioralNotes: dog.behavioralNotes ?? '',
+      emergencyContactName: dog.emergencyContactName ?? '',
+      emergencyContactPhone: dog.emergencyContactPhone ?? '',
+      profilePhotoUrl: dog.profilePhotoUrl ?? ''
+    });
+    this.photoPreviewUrl = dog.profilePhotoUrl ?? null;
+    this.showForm = true;
+    this.cdr.detectChanges();
+  }
+
+  openAddForm() {
+    this.editingDog = null;
+    this.clearPhoto();
+    this.form.reset({ vaccinationStatus: 'current', spayedNeutered: true });
+    this.showForm = true;
+  }
+
+  cancelEdit() {
+    this.editingDog = null;
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.form.reset({ vaccinationStatus: 'current', spayedNeutered: true });
+    this.showForm = false;
+    this.clearPhoto();
   }
 }
